@@ -50,6 +50,10 @@ class Card
     return -1 if VALUE_NUMS[self.value] < VALUE_NUMS[other_card.value]
   end
 
+  def self.int_value(symbol)
+    VALUE_NUMS[symbol]
+  end
+
   def int_value
     VALUE_NUMS[self.value]
   end

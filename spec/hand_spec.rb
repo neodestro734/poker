@@ -51,9 +51,15 @@ describe Hand do
   end
 
   describe "#value" do
-    it "detects a royal flush"
-    it "detects a straight flush"
-    it "detects a four of a kind"
+    it "detects a royal flush" do
+      expect(Hand.new([kh,qh,jh,h10,ah]).value).to eq([:royal_flush, :ace])
+    end
+    it "detects a straight flush" do
+      expect(Hand.new([kh,qh,jh,h10,h9]).value).to eq([:straight_flush, :king])
+    end
+    it "detects a four of a kind" do
+      expect(Hand.new([h9,d9,c9,s9,ah]).value).to eq([:quad, :nine])
+    end
     it "detects a full house" do
       expect(Hand.new([h10,s10,c9,s9,d9]).value).to eq([:full_house, :nine])
     end
@@ -76,6 +82,24 @@ describe Hand do
       expect(Hand.new([d3,c5,c9,s10,ah]).value).to eq([:single, :ace])
     end
 
+  end
+
+  describe "#<=>" do
+    it "three of a kind beats a pair" do
+      pair = Hand.new([d3,c5,c9,s9,ah])
+      trips = Hand.new([d3,d9,c9,s9,ah])
+      expect(pair <=> trips).to eq(-1)
+    end
+    specify "high pair beats low pair" do
+      low = Hand.new([d3,c5,c9,s9,ah])
+      high = Hand.new([d3,c5,h10,s10,ah])
+      expect(high <=> low).to eq(1)
+    end
+    specify "pair with high card beats other pair with lower high card" do
+      low = Hand.new([d3,c5,c9,s9,kh])
+      high = Hand.new([d3,c5,c9,s9,ah])
+      expect(high <=> low).to eq(1)
+    end
   end
 
 end
