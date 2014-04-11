@@ -18,14 +18,41 @@ class Card
       :seven => "7",
       :eight => "8",
       :nine  => "9",
-      :ten   => "10",
+      :ten   => "T",
       :jack  => "J",
       :queen => "Q",
       :king  => "K",
       :ace   => "A"
     }
 
+    VALUE_NUMS = {
+      :deuce => 2,
+      :three => 3,
+      :four  => 4,
+      :five  => 5,
+      :six   => 6,
+      :seven => 7,
+      :eight => 8,
+      :nine  => 9,
+      :ten   => 10,
+      :jack  => 11,
+      :queen => 12,
+      :king  => 13,
+      :ace   => 14
+    }
+
+
   attr_reader :suit, :value
+
+  def <=>(other_card)
+    return 1 if VALUE_NUMS[self.value] > VALUE_NUMS[other_card.value]
+    return 0 if VALUE_NUMS[self.value] == VALUE_NUMS[other_card.value]
+    return -1 if VALUE_NUMS[self.value] < VALUE_NUMS[other_card.value]
+  end
+
+  def int_value
+    VALUE_NUMS[self.value]
+  end
 
   def initialize(value, suit)
     @suit, @value = suit, value

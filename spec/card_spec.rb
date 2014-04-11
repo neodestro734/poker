@@ -5,6 +5,10 @@ require 'card'
 describe Card do
 
   subject(:card) { Card.new(:jack, :diamonds) }
+  let(:jh) { Card.new(:jack, :hearts) }
+  let(:h10) { Card.new(:ten, :hearts) }
+  let(:s10) { Card.new(:ten, :spades) }
+  let(:h9) { Card.new(:nine, :hearts) }
 
   describe "#initialize" do
     it "makes a jack of diamonds" do
@@ -19,6 +23,14 @@ describe Card do
 
   describe "has methods" do
     it { should respond_to(:suit, :value) }
+  end
+
+  describe "#<=>" do
+    it "compares numbered cards successfully" do
+      expect(h10 <=> h10).to eq(0)
+      expect(h10 <=> h9).to eq(1)
+      expect(h9 <=> jh).to eq(-1)
+    end
   end
 
 end

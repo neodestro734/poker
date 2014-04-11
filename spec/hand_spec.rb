@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'hand'
+require 'card'
 
 describe Hand do
 
@@ -36,7 +37,7 @@ describe Hand do
     end
 
     it "initializes with the correct number of cards" do
-      cards = [j_of_d]
+      cards = [jh]
       h = Hand.new(cards)
       expect(h.cards).to eq(cards)
     end
@@ -53,13 +54,27 @@ describe Hand do
     it "detects a royal flush"
     it "detects a straight flush"
     it "detects a four of a kind"
-    it "detects a full house"
-    it "detects a flush"
-    it "detects a straight"
-    it "detects a three of a kind"
-    it "detects a two pair"
-    it "detects a single pair"
-    it "detects a high card"
+    it "detects a full house" do
+      expect(Hand.new([h10,s10,c9,s9,d9]).value).to eq([:full_house, :nine])
+    end
+    it "detects a flush" do
+      expect(Hand.new([ah, kh, qh, jh, h9]).value).to eq([:flush, :ace])
+    end
+    it "detects a straight" do
+      expect(Hand.new([kh,qh,jh,h10,s9]).value).to eq([:straight, :king])
+    end
+    it "detects a three of a kind" do
+      expect(Hand.new([d3,d9,c9,s9,ah]).value).to eq([:trip, :nine])
+    end
+    it "detects a two pair" do
+      expect(Hand.new([h10,s10,c9,s9,ah]).value).to eq([:two_pair, :ten])
+    end
+    it "detects a single pair" do
+      expect(Hand.new([d3,c5,c9,s9,ah]).value).to eq([:pair, :nine])
+    end
+    it "detects a high card" do
+      expect(Hand.new([d3,c5,c9,s10,ah]).value).to eq([:single, :ace])
+    end
 
   end
 
