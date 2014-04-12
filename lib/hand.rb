@@ -14,7 +14,7 @@ class Hand
   end
 
   def display
-    disp_string = @cards.map(&:display_string).join('')
+    disp_string = @cards.map(&:display_string).join('') + "\n"
     print disp_string
     disp_string
   end

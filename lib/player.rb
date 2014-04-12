@@ -1,4 +1,4 @@
-require 'hand'
+# require 'hand'
 
 class Player
   attr_reader :money, :hand, :name

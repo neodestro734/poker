@@ -1,6 +1,6 @@
 # encoding: utf-8
 # require 'ruby-debug'
-require_relative 'card'
+# require_relative 'card'
 
 class Deck
   attr_reader :cards

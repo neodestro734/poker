@@ -6,6 +6,8 @@ require_relative 'card'
 
 class Game
 
+  attr_reader :players, :active_players
+
   def initialize(player_count = 2)
     # @players = Array.new(player_count) { Player.new(1_000, "Fred") }
     @players = [Player.new(1_000, "1"), Player.new(1_000, "2")]
@@ -17,23 +19,23 @@ class Game
   def play
 
     until over?
-      @players[0].hand.add_card(Card.new(:four, :spades))
+      deal_hands
       @players.each(&:display_hand)
-      # deal_hands
-      # ask_for_bets
+      ask_for_bets
       # get_discards
       # ask_for_bets
       # resolve_hand
       # @deck = Deck.new
+      break
     end
 
   end
 
-  private
+  # private
 
   def deal_hands
     @players.each do |player|
-      player.take_cards(@deck.deal(5))
+      player.receive_cards(@deck.deal(5))
     end
   end
 
@@ -41,12 +43,12 @@ class Game
     # bets = Hash.new(0)
     # highest_bet = 0
     # bettor_ind = 0
-    #
+
     # until betting_over?(bets)
     #   if @players[bettor_ind].fold?
     #   required_bet = max(100, highest_bet - bets[@players[bettor_ind]])
     #   current_bet = @players[bettor_ind].get_bet(required_bet)
-    #
+
     #   bettor_ind = bettor_ind + 1 % @players.size
     # end
     # come back when not burnt out on this project
@@ -54,7 +56,7 @@ class Game
 
   def betting_over?(bets)
     return false unless bets.size == @players.size
-    bets.all? {|key, val| val == 0 || val == bets.first.value }
+    bets.all? {|key, val| val == 0 || val == bets.values.first }
   end
 
   def over?
@@ -76,7 +78,7 @@ class Game
 
 end
 
-Game.new.play
+# Game.new.play
 
 
 

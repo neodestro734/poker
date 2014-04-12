@@ -104,7 +104,7 @@ describe Hand do
 
   describe "#display" do
     it "prints the display string" do
-      expect(Hand.new([ah, kh]).display).to eq("A♥ K♥ ")
+      expect(Hand.new([ah, kh]).display).to eq("A♥ K♥ \n")
     end
   end
 
