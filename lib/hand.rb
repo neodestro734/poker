@@ -48,6 +48,13 @@ class Hand
     Card.int_value(our_high) <=> Card.int_value(their_high)
   end
 
+  def add_card(card)
+    @cards << card
+  end
+
+  def remove_card(card)
+    @cards.delete_if { |cand| cand == card }
+  end
 
 
   protected
