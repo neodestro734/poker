@@ -58,6 +58,10 @@ class Card
     VALUE_NUMS[symbol]
   end
 
+  def display_string
+    VALUE_STRINGS[self.value] + SUIT_STRINGS[self.suit] + ' '
+  end
+
   def int_value
     VALUE_NUMS[self.value]
   end

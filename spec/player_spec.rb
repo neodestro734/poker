@@ -9,10 +9,10 @@ describe Player do
     expect(bob.hand.cards.empty?).to be(true)
   end
 
-  describe '#take_cards(cards)' do
+  describe '#receive_cards' do
 
-    it 'takes five cards' do
-      bob.take_cards([c1,c1,c1,c1,c1])
+    it 'receives five cards' do
+      bob.receive_cards([c1,c1,c1,c1,c1])
       expect(bob.hand.size).to eq(5)
     end
 

@@ -1,19 +1,20 @@
-# require 'hand'
+require 'hand'
 
 class Player
-  attr_reader :money, :hand
+  attr_reader :money, :hand, :name
 
-  def initialize(money = 1_000_000)
+  def initialize(money = 1_000_000, name = "Fred")
     @money = money
     @hand = Hand.new
+    @name = name
   end
 
-  def take_cards(cards)
+  def receive_cards(cards)
     cards.each { |card| hand.add_card(card) }
   end
 
-  def remove_card(card)
-    hand.remove_card(card)
+  def remove_cards(cards)
+    @hand.cards -= cards
   end
 
   def bet(amnt)
@@ -34,11 +35,12 @@ class Player
   end
 
   def display_hand
-    puts @hand.display
+    @hand.display
   end
 
   def discard_cards
-
+    puts "How many cards would you like to discard?"
+    gets.chomp.to_i
   end
 
 end

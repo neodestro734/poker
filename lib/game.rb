@@ -1,13 +1,14 @@
-require './hand'
-require './deck'
-require './player'
-require './card'
+require_relative 'hand'
+require_relative 'deck'
+require_relative 'player'
+require_relative 'card'
 
 
 class Game
 
   def initialize(player_count = 2)
-    @players = Array.new(player_count) { Player.new }
+    # @players = Array.new(player_count) { Player.new(1_000, "Fred") }
+    @players = [Player.new(1_000, "1"), Player.new(1_000, "2")]
     @active_players = @players
     @deck = Deck.new
     @pot = 0
@@ -16,12 +17,14 @@ class Game
   def play
 
     until over?
-      deal_hands
-      ask_for_bets
-      get_discards
-      ask_for_bets
-      resolve_hand
-      @deck = Deck.new
+      @players[0].hand.add_card(Card.new(:four, :spades))
+      @players.each(&:display_hand)
+      # deal_hands
+      # ask_for_bets
+      # get_discards
+      # ask_for_bets
+      # resolve_hand
+      # @deck = Deck.new
     end
 
   end
@@ -60,8 +63,9 @@ class Game
 
   def get_discards
     @players.each do |player|
+      p player.name
       count = player.discard_cards
-      player.take_cards(@deck.deal(count))
+      player.remove_cards(count)
     end
   end
 

@@ -1,4 +1,6 @@
 # encoding: utf-8
+# require 'ruby-debug'
+require_relative 'card'
 
 class Deck
   attr_reader :cards
@@ -36,3 +38,7 @@ class Deck
   end
 
 end
+
+# deck = Deck.new
+# disp_string = deck.cards.map(&:display)
+# p disp_string.count

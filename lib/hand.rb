@@ -1,6 +1,6 @@
 class Hand
 
-  attr_reader :cards
+  attr_accessor :cards
 
   HAND_RANK = {single: 0, pair: 1, two_pair: 2, trip: 3, straight: 4, flush: 5,
     full_house: 6, quad: 7, straight_flush: 8, royal_flush: 9}
@@ -14,7 +14,9 @@ class Hand
   end
 
   def display
-    #ask cards how they display and concatenate
+    disp_string = @cards.map(&:display_string).join('')
+    print disp_string
+    disp_string
   end
 
   def value
@@ -94,3 +96,4 @@ class Hand
     partial.size == 2 ? partial.keys.max : nil
   end
 end
+

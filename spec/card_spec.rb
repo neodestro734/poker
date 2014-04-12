@@ -33,4 +33,10 @@ describe Card do
     end
   end
 
+  describe "#display_string" do
+    it "should return a string to display" do
+      expect(jh.display_string).to eq("J♥ ")
+    end
+  end
+
 end
