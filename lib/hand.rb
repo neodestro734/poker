@@ -13,6 +13,10 @@ class Hand
     @cards.size
   end
 
+  def display
+    #ask cards how they display and concatenate
+  end
+
   def value
     vals = val_hash
     suits = suit_hash

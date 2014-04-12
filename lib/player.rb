@@ -20,12 +20,21 @@ class Player
     @money -= amnt
   end
 
-  def get_bet(min_amnt)
-
+  def <=>(other)
+    self.hand <=> other.hand
   end
 
-  def show_hand
+  def get_bet(min_amnt)
+    puts 'what is your bet?'
+    gets.chomp.to_i
+  end
 
+  def receive_winnings(amnt)
+    @money += amnt
+  end
+
+  def display_hand
+    puts @hand.display
   end
 
   def discard_cards
