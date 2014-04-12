@@ -1,4 +1,4 @@
-require 'hand'
+# require 'hand'
 
 class Player
   attr_reader :money, :hand
@@ -18,6 +18,18 @@ class Player
 
   def bet(amnt)
     @money -= amnt
+  end
+
+  def get_bet(min_amnt)
+
+  end
+
+  def show_hand
+
+  end
+
+  def discard_cards
+
   end
 
 end
