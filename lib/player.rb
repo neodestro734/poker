@@ -42,8 +42,9 @@ class Player
   end
 
   def discard_cards
-    puts "How many cards would you like to discard?"
-    gets.chomp.to_i
+    puts "Which cards would you like to discard?"
+    puts "Please refer to them by their indices:"
+    discards = gets.chomp.split(' ').map(&:to_i)
+    @hand.cards.select! { |el| !discards.include?(@hand.cards.index(el))  }
   end
-
 end

@@ -23,17 +23,31 @@ class Game
       deal_hands
       @players.each(&:display_hand)
       @active_players = @players
-      bets = ask_for_bets
-      puts 'betting is over'
-      @pot = @players.inject(0) { |sum, p| sum + p.my_bet }
-      p @pot
-      # get_discards
+      # bets = ask_for_bets
+      # puts 'betting is over'
+      # @pot = @players.inject(0) { |sum, p| sum + p.my_bet }
+      # puts "The pot is now $#{@pot}"
+
+      # @players.each(&:display_hand)
+
+
+      get_discards
+      get_replacement_cards
+
+      @players.each(&:display_hand)
       # ask_for_bets
       # resolve_hand
       # @deck = Deck.new
       break
     end
 
+  end
+
+  def get_replacement_cards
+    @active_players.each do |player|
+      cards_needed = 5 - player.hand.cards.count
+      player.receive_cards(@deck.deal(cards_needed))
+    end
   end
 
   # private
@@ -100,8 +114,7 @@ class Game
   def get_discards
     @players.each do |player|
       p player.name
-      count = player.discard_cards
-      player.remove_cards(count)
+      player.discard_cards
     end
   end
 
