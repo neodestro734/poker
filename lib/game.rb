@@ -2,6 +2,7 @@ require_relative 'hand'
 require_relative 'deck'
 require_relative 'player'
 require_relative 'card'
+require 'debugger'
 
 
 class Game
@@ -21,7 +22,9 @@ class Game
     until over?
       deal_hands
       @players.each(&:display_hand)
-      ask_for_bets
+      @active_players = @players
+      bets = ask_for_bets
+      puts 'betting is over'
       # get_discards
       # ask_for_bets
       # resolve_hand
@@ -45,22 +48,47 @@ class Game
     bettor_ind = 0
 
     until betting_over?(bets)
-      # if @players[bettor_ind].fold?
-      required_bet = max(100, highest_bet - bets[@players[bettor_ind]])
-      # current_bet = @players[bettor_ind].get_bet(required_bet)
+      cur_bettor = active_players[bettor_ind]
+      required_bet = [100, highest_bet].max
+      p required_bet
+      bet = get_bet_or_fold(cur_bettor, required_bet)
 
+      if bet == -1
+        active_players.delete(cur_bettor)
+        bettor_ind = (bettor_ind ) % @active_players.size
+        next
+      end
+
+      bets[cur_bettor] = bet
+      highest_bet = bet if bet > highest_bet
+      @pot += bet
       bettor_ind = (bettor_ind + 1) % @active_players.size
     end
-    # come back when not burnt out on this project
+    bets
   end
 
-  def get_bet
-
+  def get_bet_or_fold(player, required_bet)
+    bet = 0
+    begin
+      puts "#{player.name}, what would you like to bet? Type -1 to fold:"
+      bet = gets.chomp.to_i
+      debugger
+      if bet < required_bet && bet != -1
+        raise InvalidBetAmount.new("Must bet minimum of #{required_bet}")
+      end
+    rescue InvalidBetAmount => e
+      puts e
+      retry
+    rescue => e
+      puts "Error with input, please try again"
+      retry
+    end
+    bet
   end
 
   def betting_over?(bets)
-    return false unless bets.size == @players.size
-    bets.all? {|key, val| val == 0 || val == bets.values.first }
+    return false unless bets.size == @active_players.size
+    bets.all? {|key, val| val == bets.values.first }
   end
 
   def over?
@@ -82,7 +110,10 @@ class Game
 
 end
 
-# Game.new.play
+class InvalidBetAmount < ArgumentError
+end
+
+Game.new.play
 
 
 
