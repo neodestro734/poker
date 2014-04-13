@@ -25,6 +25,8 @@ class Game
       @active_players = @players
       bets = ask_for_bets
       puts 'betting is over'
+      @pot = @players.inject(0) { |sum, p| sum + p.my_bet }
+      p @pot
       # get_discards
       # ask_for_bets
       # resolve_hand
@@ -59,9 +61,10 @@ class Game
         next
       end
 
+      cur_bettor.my_bet = bet
+      cur_bettor.bet(bet)
       bets[cur_bettor] = bet
       highest_bet = bet if bet > highest_bet
-      @pot += bet
       bettor_ind = (bettor_ind + 1) % @active_players.size
     end
     bets
@@ -72,7 +75,6 @@ class Game
     begin
       puts "#{player.name}, what would you like to bet? Type -1 to fold:"
       bet = gets.chomp.to_i
-      debugger
       if bet < required_bet && bet != -1
         raise InvalidBetAmount.new("Must bet minimum of #{required_bet}")
       end

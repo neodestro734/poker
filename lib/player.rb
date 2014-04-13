@@ -1,11 +1,14 @@
 # require 'hand'
 
 class Player
+
   attr_reader :money, :hand, :name
+  attr_accessor :my_bet
 
   def initialize(money = 1_000_000, name = "Fred")
     @money = money
     @hand = Hand.new
+    @my_bet = 0
     @name = name
   end
 
