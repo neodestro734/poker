@@ -28,4 +28,16 @@ describe Game do
 		end
 	end
 
+	describe "#get_bet_or_fold" do
+		it "returns -1 if they fold or number if they don't"
+
+		# 	expect(-1..1_000_000).to cover({ game.a.get_bet_or_fold })
+		# end
+		it "changes the players bet if they do not fold"
+	end
+
+	describe "#ask_for_bets" do
+		it "gets all the players bets"
+	end
+
 end

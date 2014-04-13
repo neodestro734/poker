@@ -40,18 +40,22 @@ class Game
   end
 
   def ask_for_bets
-    # bets = Hash.new(0)
-    # highest_bet = 0
-    # bettor_ind = 0
+    bets = Hash.new(0)
+    highest_bet = 0
+    bettor_ind = 0
 
-    # until betting_over?(bets)
-    #   if @players[bettor_ind].fold?
-    #   required_bet = max(100, highest_bet - bets[@players[bettor_ind]])
-    #   current_bet = @players[bettor_ind].get_bet(required_bet)
+    until betting_over?(bets)
+      # if @players[bettor_ind].fold?
+      required_bet = max(100, highest_bet - bets[@players[bettor_ind]])
+      # current_bet = @players[bettor_ind].get_bet(required_bet)
 
-    #   bettor_ind = bettor_ind + 1 % @players.size
-    # end
+      bettor_ind = (bettor_ind + 1) % @active_players.size
+    end
     # come back when not burnt out on this project
+  end
+
+  def get_bet
+
   end
 
   def betting_over?(bets)
