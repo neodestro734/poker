@@ -23,19 +23,24 @@ class Game
       deal_hands
       @players.each(&:display_hand)
       @active_players = @players
-      # bets = ask_for_bets
-      # puts 'betting is over'
-      # @pot = @players.inject(0) { |sum, p| sum + p.my_bet }
-      # puts "The pot is now $#{@pot}"
+      ask_for_bets
+      puts 'Betting is over'
+      @pot = @players.inject(@pot) { |sum, p| sum + p.my_bet }
+      puts "The pot is now $#{@pot}"
 
-      # @players.each(&:display_hand)
+      @players.each(&:display_hand)
 
 
       get_discards
       get_replacement_cards
 
       @players.each(&:display_hand)
-      # ask_for_bets
+
+      ask_for_bets
+      puts 'Betting is over'
+      @pot = @players.inject(@pot) { |sum, p| sum + p.my_bet }
+      puts "The pot is now $#{@pot}"
+
       # resolve_hand
       # @deck = Deck.new
       break
@@ -60,18 +65,21 @@ class Game
 
   def ask_for_bets
     bets = Hash.new(0)
-    highest_bet = 0
+    highest_bet = @active_players.first.my_bet
+    # puts "Highest bet is #{highest_bet}"
     bettor_ind = 0
 
     until betting_over?(bets)
       cur_bettor = active_players[bettor_ind]
       required_bet = [100, highest_bet].max
-      p required_bet
+      # p required_bet
       bet = get_bet_or_fold(cur_bettor, required_bet)
 
       if bet == -1
         active_players.delete(cur_bettor)
-        bettor_ind = (bettor_ind ) % @active_players.size
+        unless @active_players.empty?
+          bettor_ind = (bettor_ind ) % @active_players.size
+        end
         next
       end
 
